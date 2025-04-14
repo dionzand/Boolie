@@ -151,4 +151,4 @@ if node_id and "_gate" in node_id:
         st.session_state.grid.rerun_logic()
         st.rerun()
 
-st.image("https://img.webnots.com/2024/11/Logic-Gates-Symbols.jpg")
+st.image("truth_table.jpg", caption="Truth Table")
