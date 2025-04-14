@@ -124,7 +124,7 @@ if "grid" not in st.session_state:
     st.session_state.grid = grid
 
 config = Config(width=300,
-                height=500,
+                height=400,
                 directed=True,
                 physics=False,
                 hierarchical=True,
@@ -134,7 +134,7 @@ config = Config(width=300,
                 blockShifting=True,
                 edgeMinimization=True,
                 parentCentralization=True,
-                sortMethod="directed", )
+                sortMethod="directed")
 
 st.info("Click on a gate (square) and select the gate type from the select box below.")
 node_id = agraph(nodes=st.session_state.grid.nodes,
