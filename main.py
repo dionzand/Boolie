@@ -2,7 +2,6 @@ from dataclasses import dataclass, field
 import streamlit as st
 import pygates
 from streamlit_agraph import agraph, Node, Edge, Config
-import networkx
 
 lg = pygates.Gates
 
