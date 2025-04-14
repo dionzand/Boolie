@@ -106,8 +106,8 @@ if "grid" not in st.session_state:
         else:
             for i in range(level + 1):
                 grid.nodes_dict[level + 1].append(f"{level + 1}_{i + 1}")
-                grid.nodes.append(Node(id=f"{level + 1}_{i + 1}_gate", shape="square", size=15))  # Gate node is a square
-                grid.nodes.append(Node(id=f"{level + 1}_{i + 1}_signal", shape="circle", size=15))
+                grid.nodes.append(Node(id=f"{level + 1}_{i + 1}_gate", shape="square", size=15, color="#eeeeee"))  # Gate node is a square
+                grid.nodes.append(Node(id=f"{level + 1}_{i + 1}_signal", shape="circle", size=15, color="#eeeeee"))
                 grid.edges.append(Edge(source=f"{level + 1}_{i + 1}_gate",
                                        target=f"{level + 1}_{i + 1}_signal"))
                 grid.gates.append(Gate(gate_id=f"{level + 1}_{i + 1}_gate"))  # Assign gate for this node
@@ -150,3 +150,5 @@ if node_id and "_gate" in node_id:
         st.session_state.grid.set_gatetype(node_id, gate_type)
         st.session_state.grid.rerun_logic()
         st.rerun()
+
+st.image("https://img.webnots.com/2024/11/Logic-Gates-Symbols.jpg")
