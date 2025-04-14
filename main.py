@@ -1,4 +1,6 @@
 from dataclasses import dataclass, field
+from pathlib import Path
+
 import streamlit as st
 import pygates
 from streamlit_agraph import agraph, Node, Edge, Config
@@ -150,5 +152,3 @@ if node_id and "_gate" in node_id:
         st.session_state.grid.set_gatetype(node_id, gate_type)
         st.session_state.grid.rerun_logic()
         st.rerun()
-
-st.image("truth_table.jpg", caption="Truth Table")
