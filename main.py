@@ -169,8 +169,8 @@ if "player0" not in st.session_state:
 if "player1" not in st.session_state:
     st.session_state.player1 = [i for i in gate_mapping.keys()]
 
-config = Config(width=500,
-                height=700,
+config = Config(width=300,
+                height=400,
                 directed=True,
                 physics=False,
                 hierarchical=True,
