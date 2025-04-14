@@ -51,6 +51,7 @@ points_mapping = {
 class Gate:
     gate_id: str
     gate_type: str = None
+    owner: str = None
 
 
 @dataclass
@@ -72,16 +73,17 @@ class Grid:
         for gate in self.gates:
             if gate.gate_id == id:
                 gate.gate_type = type
+                gate.owner = player
 
         for node in self.nodes:
             if node.id == id:
                 node.label = f"{type} ({player.replace('player', '')})"
                 node.color = color_mapping[player]
 
-    def get_gatetype(self, id):
+    def get_gate(self, id):
         for gate in self.gates:
             if gate.gate_id == id:
-                return gate.gate_type
+                return gate
 
     def rerun_logic(self):
         for level in range(5, 0, -1):  # Levels 5 down to 1
@@ -167,8 +169,8 @@ if "player0" not in st.session_state:
 if "player1" not in st.session_state:
     st.session_state.player1 = [i for i in gate_mapping.keys()]
 
-config = Config(width=300,
-                height=400,
+config = Config(width=500,
+                height=700,
                 directed=True,
                 physics=False,
                 hierarchical=True,
@@ -193,19 +195,26 @@ if node_id and "_gate" in node_id:
                                        key="player0_selectbox")
 
     if col1.button("Set gate type for player 0"):
-        if gate_type_player0 == "":
-            gate_type_player0 = None
+        previous_gate = st.session_state.grid.get_gate(node_id)
+        if previous_gate.gate_type:
+            if previous_gate.owner == "player0":
+                if gate_type_player0 == "":
+                    gate_type_player0 = None
+                else:
+                    st.session_state.player0.remove(gate_type_player0)
+
+                st.session_state.player0.append(previous_gate.gate_type)
+                st.session_state.grid.set_gatetype(node_id, gate_type_player0, "player0")
+                st.session_state.grid.rerun_logic()
+                st.rerun()
         else:
-            st.session_state.player0.remove(gate_type_player0)
-
-        previous_state = st.session_state.grid.get_gatetype(node_id)
-        if previous_state:
-            st.session_state.player0.append(previous_state)
-
-        st.session_state.grid.set_gatetype(node_id, gate_type_player0, "player0")
-        st.session_state.grid.rerun_logic()
-
-        st.rerun()
+            if gate_type_player0 == "":
+                gate_type_player0 = None
+            else:
+                st.session_state.player0.remove(gate_type_player0)
+            st.session_state.grid.set_gatetype(node_id, gate_type_player0, "player0")
+            st.session_state.grid.rerun_logic()
+            st.rerun()
 
     col2.write("Player 1")
     gate_type_player1 = col2.selectbox(label="Choose a logic gate type",
@@ -213,19 +222,27 @@ if node_id and "_gate" in node_id:
                                        key="player1_selectbox")
 
     if col2.button("Set gate type for player 1"):
-        if gate_type_player1 == "":
-            gate_type_player1 = None
+        previous_gate = st.session_state.grid.get_gate(node_id)
+        if previous_gate.gate_type:
+            if previous_gate.owner == "player1":
+                if gate_type_player1 == "":
+                    gate_type_player1 = None
+                else:
+                    st.session_state.player1.remove(gate_type_player1)
+
+                st.session_state.player1.append(previous_gate.gate_type)
+                st.session_state.grid.set_gatetype(node_id, gate_type_player1, "player1")
+                st.session_state.grid.rerun_logic()
+                st.rerun()
         else:
-            st.session_state.player1.remove(gate_type_player1)
+            if gate_type_player1 == "":
+                gate_type_player1 = None
+            else:
+                st.session_state.player1.remove(gate_type_player1)
+            st.session_state.grid.set_gatetype(node_id, gate_type_player1, "player1")
+            st.session_state.grid.rerun_logic()
+            st.rerun()
 
-        previous_state = st.session_state.grid.get_gatetype(node_id)
-        if previous_state:
-            st.session_state.player1.append(previous_state)
-
-        st.session_state.grid.set_gatetype(node_id, gate_type_player1, "player1")
-        st.session_state.grid.rerun_logic()
-
-        st.rerun()
 
 st.info("Click on a gate (square) and select the gate type from the select box below.")
 st.info("Each player has one set of gates. Player 0 is red, player 1 is green.")
