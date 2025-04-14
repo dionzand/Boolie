@@ -100,13 +100,14 @@ if "grid" not in st.session_state:
                 grid.nodes.append(Node(id=f"{level + 1}_{i + 1}_signal",
                                        label=x,
                                        color=color_mapping[x],
-                                       shape="circle"))  # Signal node is a circle
+                                       shape="circle",
+                                       size=15))  # Signal node is a circle
 
         else:
             for i in range(level + 1):
                 grid.nodes_dict[level + 1].append(f"{level + 1}_{i + 1}")
-                grid.nodes.append(Node(id=f"{level + 1}_{i + 1}_gate", shape="square", size=10))  # Gate node is a square
-                grid.nodes.append(Node(id=f"{level + 1}_{i + 1}_signal", shape="circle"))
+                grid.nodes.append(Node(id=f"{level + 1}_{i + 1}_gate", shape="square", size=15))  # Gate node is a square
+                grid.nodes.append(Node(id=f"{level + 1}_{i + 1}_signal", shape="circle", size=15))
                 grid.edges.append(Edge(source=f"{level + 1}_{i + 1}_gate",
                                        target=f"{level + 1}_{i + 1}_signal"))
                 grid.gates.append(Gate(gate_id=f"{level + 1}_{i + 1}_gate"))  # Assign gate for this node
@@ -123,8 +124,8 @@ if "grid" not in st.session_state:
 
     st.session_state.grid = grid
 
-config = Config(width=300,
-                height=400,
+config = Config(width=500,
+                height=700,
                 directed=True,
                 physics=False,
                 hierarchical=True,
