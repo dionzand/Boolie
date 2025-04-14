@@ -7,6 +7,7 @@ lg = pygates.Gates
 
 st.set_page_config(
     layout="wide"
+
 )
 
 gate_mapping = {
@@ -135,6 +136,7 @@ config = Config(width=300,
                 parentCentralization=True,
                 sortMethod="directed", )
 
+st.info("Click on a gate (square) and select the gate type from the select box below.")
 node_id = agraph(nodes=st.session_state.grid.nodes,
                  edges=st.session_state.grid.edges,
                  config=config)
